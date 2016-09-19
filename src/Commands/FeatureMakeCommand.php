@@ -75,8 +75,11 @@ class FeatureMakeCommand extends Command
     protected function makeMigration()
     {
         if($this->confirm('Do you want to build migrations? [y|N]')){
+            $options['name'] = $this->ask('Enter Migration name:');
+            $options['meta'] = (new NameParser)->parse($options['name']);
+            $options['schema'] = $this->ask('Enter migration schema:');
             $makeMigration = new MakeMigration($this->files);
-            $makeMigration->build($this->name, $this->namespace, $this->form, $this->resource);
+            $makeMigration->build($this->name, $this->namespace, $this->form, $this->resource, $options);
         }
         $this->bar->advance();
     }
@@ -92,8 +95,10 @@ class FeatureMakeCommand extends Command
     protected function makePivot()
     {
         if($this->confirm('Do you want to build a pivot table? [y|N]')){
-            $makeModel = new MakeModel($this->files);
-            $makeModel->build($this->name, $this->namespace, $this->form, $this->resource);
+            $options['tableOne'] = $this->ask('Enter First Table Name:');
+            $options['tableTwo'] = $this->ask('Enter Second Table Name:');
+            $makePivot = new MakePivot($this->files);
+            $makePivot->build($this->name, $this->namespace, $this->form, $this->resource, $options);
         }
         $this->bar->advance();
     }
@@ -152,8 +157,18 @@ class FeatureMakeCommand extends Command
         if($this->confirm('Do you want to build a Controller? [y|N]')){
             $makeController = new MakeController($this->files);
             $makeController->build($this->name, $this->namespace, $this->form, $this->resource);
+            $this->makeFormRequest();
             $this->makeRoute();
             $this->makeViews();
+        }
+        $this->bar->advance();
+    }
+
+    protected function makeFormRequest()
+    {
+        if($this->confirm('Do you want to build Form Requests for form validation? [y|N]')){
+            $makeForm = new MakeFormRequest($this->files);
+            $makeForm->build($this->name, $this->namespace, $this->form, $this->resource);
         }
         $this->bar->advance();
     }
@@ -164,6 +179,7 @@ class FeatureMakeCommand extends Command
             $makeViews = new MakeView($this->files);
             $makeViews->build($this->name, $this->namespace, $this->form, $this->resource);
         }
+        $this->bar->advance();
     }
 
     protected function makeRoute()
@@ -187,8 +203,7 @@ class FeatureMakeCommand extends Command
     protected function makeServiceProvider()
     {
         //If they chose a package, offer to build a serviceProvider
-        $serviceProvider = $this->ask('Do you want to build a Service Provider for our Package? (Y/n)');
-        if($this->confirm('Do you want to build a pivot table? [y|N]')){
+        if($this->confirm('Do you want to build a Service Provider for our Package? [y|N]')){
             $makeServiceProvider = new MakeServiceProvider($this->files);
             $makeServiceProvider->build($this->name, $this->namespace, $this->form, $this->resource);
         }
