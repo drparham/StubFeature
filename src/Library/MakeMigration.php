@@ -4,6 +4,8 @@
 class MakeMigration extends Make
 {
     protected $table;
+    protected $schema;
+    protected $meta;
 
     protected function getPath($name)
     {
@@ -12,16 +14,54 @@ class MakeMigration extends Make
 
     protected function make()
     {
+        $this->schema = $this->options['schema'];
+        $this->meta = $this->options['meta'];
 
+        if ($this->files->exists($path = $this->getPath($this->name))) {
+            return $this->error($this->type . ' already exists!');
+        }
+        $this->makeDirectory($path);
+        $this->files->put($path, $this->compileStub());
+        $this->info('Migration created successfully.');
+        $this->composer->dumpAutoloads();
     }
+
     protected function compileStub()
     {
-        $stub = $this->files->get(__DIR__ . '/../stubs/migration.stub');
+        $stub = $this->getStub();
         $this->replaceClassName($stub)
+            ->replaceNameSpace($stub)
             ->replaceSchema($stub)
             ->replaceTableName($stub);
         return $stub;
     }
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        return $this->files->get(__DIR__ . '/../Stubs/migration.stub');
+    }
+
+    /**
+     * Replace the schema for the stub.
+     *
+     * @param  string $stub
+     * @return $this
+     */
+    protected function replaceSchema(&$stub)
+    {
+        if ($this->schema) {
+            $this->schema = (new SchemaParser)->parse($this->schema);
+        }
+        $schema = (new SyntaxBuilder)->create($this->schema, $this->meta);
+        $stub = str_replace(['{{schema_up}}', '{{schema_down}}'], $schema, $stub);
+        return $this;
+    }
+
     /**
      * Replace the table name in the stub.
      *
@@ -35,19 +75,5 @@ class MakeMigration extends Make
         return $this;
     }
 
-    /**
-     * Replace the schema for the stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    protected function replaceSchema(&$stub)
-    {
-        if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
-        }
-        $schema = (new SyntaxBuilder)->create($schema, $this->meta);
-        $stub = str_replace(['{{schema_up}}', '{{schema_down}}'], $schema, $stub);
-        return $this;
-    }
+
 }
