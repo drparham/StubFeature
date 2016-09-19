@@ -105,5 +105,12 @@ abstract class Make extends Command
      */
     abstract protected function make();
 
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    abstract protected function getStub();
+
 
 }
