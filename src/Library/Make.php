@@ -11,10 +11,11 @@ abstract class Make extends Command
      */
     protected $files;
     protected $composer;
-    protected $type;
+    protected $form;
     protected $namespace;
     protected $name;
     protected $resource;
+    protected $options = [];
 
     /**
      * Make constructor.
@@ -26,12 +27,13 @@ abstract class Make extends Command
         $this->composer = app()['composer'];
     }
 
-    final public function build($name, $namespace, $type, $resource)
+    final public function build(String $name, String $namespace, String $form, Array $resource, Array $options = null)
     {
         $this->name = $name;
         $this->namespace = $namespace;
-        $this->type = $type;
+        $this->form = $form;
         $this->resource = $resource;
+        $this->options = $options;
         $this->make();
     }
 
@@ -81,16 +83,6 @@ abstract class Make extends Command
     final protected function getModelName()
     {
         return ucwords(str_singular(camel_case($this->resource)));
-    }
-
-    /**
-     * Get the class name for the generators.
-     *
-     * @return string
-     */
-    final protected function getClassName()
-    {
-        return ucwords(camel_case($this->resource));
     }
 
     /**
