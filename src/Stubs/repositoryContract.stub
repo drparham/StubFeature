@@ -1,0 +1,9 @@
+<?php namespace {{namespace}}\Contracts;
+
+use Rinvex\Repository\Contracts\CacheableContract;
+use Rinvex\Repository\Contracts\RepositoryContract;
+
+interface {{class}}Interface extends RepositoryContract, CacheableContract
+{
+    //
+}

@@ -1,0 +1,17 @@
+<?php namespace {{namespace}}\Repositories;
+
+use {{namespace}}\Contracts\{{class}}Interface;
+use Illuminate\Contracts\Container\Container;
+use Rinvex\Repository\Repositories\EloquentRepository;
+
+class {{class}}Repository extends EloquentRepository implements {{class}}Interface
+{
+    // Instantiate repository object with required data
+    public function __construct(Container $container)
+    {
+        $this->setContainer($container)
+            ->setModel(\{{namespace}}\Models\{{modelclass}}::class)
+            ->setRepositoryId('rinvex.repository.'.md5("{{resource}}"));
+
+    }
+}

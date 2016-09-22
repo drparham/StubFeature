@@ -1,0 +1,17 @@
+<?php namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Pta\Formbuilder\Traits\ModelSchemaBuilderTrait;
+
+class {{class}} extends Model
+{
+    use ModelSchemaBuilderTrait, SoftDeletes;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = '{{table}}';
+}
