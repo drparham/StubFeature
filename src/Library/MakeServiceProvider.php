@@ -31,4 +31,10 @@ class MakeServiceProvider extends Make
     {
 
     }
+
+    protected function getStub()
+    {
+        // TODO: Implement getStub() method.
+    }
+
 }
