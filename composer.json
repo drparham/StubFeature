@@ -18,7 +18,7 @@
     "require": {
         "php": ">=5.6.4",
         "illuminate/support": "~5.0",
-        "pta/formbuilder": "0.1.*",
+        "pta/formbuilder": "0.2.*",
         "rinvex/repository": "2.0.*"
     },
     "require-dev": {
