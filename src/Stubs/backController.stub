@@ -1,0 +1,10 @@
+<?php namespace {{namespace}}Http\Controllers\Admin;
+
+use {{namespace}}Http\Requests;
+use Illuminate\Http\Request;
+use {{namespace}}Http\Controllers\AdminController;
+
+class {{class}}Controller extends AdminController
+{
+    //
+}

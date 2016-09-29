@@ -1,0 +1,27 @@
+{
+	"name": "{{namespace}}",
+	"description": "Describe Package functionality",
+	"authors": [
+		{
+			"name": "Your Name",
+			"email": "Your Email"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+        "pta/formbuilder": "0.2.*",
+        "rinvex/repository": "2.0.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"{{namespace}}": "src/"
+		}
+	},
+	"autoload-dev": {
+            "psr-4": {
+                "{{namespace}}Test\\": "tests"
+            }
+        },
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}

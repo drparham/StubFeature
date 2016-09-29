@@ -1,4 +1,4 @@
-<?php namespace {{namespace}}\Contracts;
+<?php namespace {{namespace}}Contracts;
 
 use Rinvex\Repository\Contracts\CacheableContract;
 use Rinvex\Repository\Contracts\RepositoryContract;

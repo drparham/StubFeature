@@ -1,0 +1,10 @@
+<?php namespace {{namespace}}Http\Controllers\Frontend;
+
+use {{namespace}}Http\Requests;
+use Illuminate\Http\Request;
+use {{namespace}}Http\Controllers\BaseController;
+
+class {{class}}Controller extends BaseController
+{
+    //
+}

@@ -1,4 +1,4 @@
-<?php namespace {{namespace}}\Repositories;
+<?php namespace {{namespace}}Repositories;
 
 use {{namespace}}\Contracts\{{class}}Interface;
 use Illuminate\Contracts\Container\Container;
