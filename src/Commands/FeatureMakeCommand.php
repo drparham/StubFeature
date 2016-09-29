@@ -38,8 +38,21 @@ class FeatureMakeCommand extends Command
     protected function handle()
     {
         $this->name = $this->argument('name');
-        $this->namespace = $this->argument('namespace');
         $this->form = $this->choice('Will this be a package or a feature?', ['Package', 'Feature'], 'Feature');
+
+        switch($this->form){
+            case 'Feature':
+                $this->info('Namespace is App for a new Laravel Project.');
+                $namespace = $this->ask('Namespace for Feature?','App');
+                $this->namespace = $namespace.'\\'.'Feature\\'.$this->name.'\\';
+                break;
+            case 'Package':
+                $this->info('Namespace for a Package is typically your github user/org name, for this package it would just be Drparham.');
+                $namespace = $this->ask('Namespace for Package');
+                $this->namespace = $namespace.'\\'.$this->name.'\\';
+                break;
+        };
+
         $this->makeResource();
     }
 
