@@ -71,7 +71,33 @@ abstract class Make extends Command
     final protected function replaceNameSpace(&$stub)
     {
         $nameSpace = ucwords(camel_case($this->namespace));
-        $stub = str_replace('{{NameSpace}}', $nameSpace, $stub);
+        $stub = str_replace('{{namespace}}', $nameSpace, $stub);
+        return $this;
+    }
+
+    /**
+     * Replace the name in the stub.
+     *
+     * @param  string $stub
+     * @return $this
+     */
+    final protected function replaceName(&$stub)
+    {
+        $name = strtolower($this->name);
+        $stub = str_replace('{{name}}', $name, $stub);
+        return $this;
+    }
+
+    /**
+     * Replace the form in the stub.
+     *
+     * @param  string $stub
+     * @return $this
+     */
+    final protected function replaceForm(&$stub)
+    {
+        $name = $this->form;
+        $stub = str_replace('{{form}}', $name, $stub);
         return $this;
     }
 
