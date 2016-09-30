@@ -34,7 +34,7 @@ class StubFeatureServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the make:seed generator.
+     * Register the make:feature generator.
      */
     private function registerFeatureGenerator()
     {
