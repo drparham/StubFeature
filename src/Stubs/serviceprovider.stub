@@ -1,0 +1,78 @@
+<?php namespace {{namespace}}Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class {{class}}ServiceProvider extends ServiceProvider
+{
+
+    protected $form = '{{form}}';
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->configuration();
+
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->configuration();
+    }
+
+    /**
+     * Register views.
+     *
+     * @return void
+     */
+    public function configuration()
+    {
+
+
+        if($this->form == 'Feature'){
+            $this->publishes([
+                config_path('{{name}}.php') => config_path('{{name}}.php'),
+            ]);
+
+            $this->mergeConfigFrom(
+                config_path('{{name}}.php'), '{{name}}'
+            );
+        }else {
+            $this->publishes([
+                __DIR__.'/../../config/config.php' => config_path('{{name}}.php'),
+            ], 'config');
+
+            $this->mergeConfigFrom(
+                __DIR__.'/../../config/config.php', '{{name}}'
+            );
+        }
+    }
+
+        /**
+         * Register views.
+         *
+         * @return void
+         */
+        public function registerViews()
+        {
+            $viewPath = base_path('resources/views/vendor/pta/formbuilder');
+
+            $sourcePath = __DIR__.'/../../resources/view';
+
+            $this->publishes([
+                $sourcePath => $viewPath
+            ], 'views');
+
+            $this->loadViewsFrom([$viewPath, $sourcePath], 'pta/formbuilder');
+
+        }
+
+
+}
